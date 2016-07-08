@@ -9,7 +9,8 @@
     "start": "npm run build && ./node_modules/.bin/webpack-dev-server --inline --progress --port 8080"
   },
   "standard": {
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "globals": ["Phaser"]
   },
   "license": "MIT",
   "author": "Anton Fisher <a.fschr@gmail.com> (http://antonfisher.com)",
