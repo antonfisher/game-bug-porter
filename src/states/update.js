@@ -1,6 +1,6 @@
 'use strict'
 
-import {Utils} from '../cls/utils.js'
+// import {Utils} from '../cls/utils.js'
 import {Global} from '../cls/global.js'
 import {config as c} from '../cls/config.js'
 import {createBag, createBug} from '../cls/fabric.js'
@@ -11,14 +11,10 @@ export function update (game) {
   const bagsGroup = Global.get('bagsGroup')
 
   bugsGroup.forEachExists((bug) => {
-    Utils.debug(bug)
-
+    // Utils.debug(bug)
     if (bug.body.y < game.height - bug.body.height - c.marginFloor) {
       bug.body.y = game.height - bug.body.height - c.marginFloor
     }
-
-    bug.body.velocity.x = 100
-
     if (bug.body.x > game.width) {
       bug.destroy()
     } else if (!lastBug || lastBug.body.x > bug.body.x) {
@@ -75,8 +71,9 @@ export function update (game) {
 }
 
 function collideUpBugsBags (bag, bug) {
+  const dx = Math.abs(bug.x - bag.x)
+
   if (bag.x > bug.x - bag.width * 0.4 && bag.x + bag.width < bug.x + bug.width - bug.width * 0.2) {
-    const dx = Math.abs(bug.x - bag.x)
     bag.body.bounce.x = 0
     bag.body.bounce.y = 0
     bag.body.velocity.x = 0
@@ -90,6 +87,18 @@ function collideUpBugsBags (bag, bug) {
     bag.body.bounce.y = 0
     bag.body.velocity.x = 0
     bag.body.velocity.y = 0
-    bug.destroy()
+    bag.x = dx
+    bag.y = bug.height - bag.height
+    bag.body.setSize(140 * c.scale, 180 * c.scale, 0, 180 * c.scale * 0.2)
+    bug.body.velocity.x = c.bugVelocity * 0.3
+
+    bug.addChild(bag)
+    bug.animations.play('kill')
+    bug.__tween = Global.get('game').add.tween(bug)
+      .to({alpha: 0}, 400, Phaser.Easing.Linear.None, false, 1500, 0, false)
+    bug.__tween.start()
+    bug.__tween.onComplete.add(function (sprite) {
+      sprite.destroy()
+    })
   }
 }

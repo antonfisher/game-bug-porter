@@ -10,7 +10,7 @@ export function createBag () {
   game.physics.arcade.enable(bag)
 
   //  Player physics properties. Give the little guy a slight bounce.
-  bag.body.bounce.y = 0.3
+  bag.body.bounce.y = 0.2
   bag.body.gravity.y = 0
   bag.body.collideWorldBounds = true
   bag.body.setSize(140 * c.scale, 180 * c.scale * 0.8, 0, 180 * c.scale * 0.2)
@@ -50,7 +50,7 @@ export function createBag () {
     sprite.events.onDragUpdate.removeAll()
     sprite.input.disableDrag()
     sprite.body.gravity.y = 300
-    sprite.body.velocity.y = 50
+    sprite.body.velocity.y = 25
   }, this)
 
   return bag
@@ -66,11 +66,12 @@ export function createBug () {
   bug.body.gravity.y = 400
   bug.body.collideWorldBounds = true
   bug.body.friction = 1
-  bug.body.velocity.x = 100
+  bug.body.velocity.x = c.bugVelocity
   bug.body.immovable = false
   bug.body.setSize(320 * c.scale, 220 * c.scale * 0.35, 0, 220 * c.scale * 0.5)
 
   bug.animations.add('move', [0, 1, 2, 3], 10, true)
+  bug.animations.add('kill', [4, 5], 10, true)
   bug.animations.play('move')
 
   return bug
