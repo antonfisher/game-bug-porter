@@ -6,6 +6,9 @@ import {config as c} from '../cls/config.js'
 import {createBag, createBug} from '../cls/fabric.js'
 
 export function update (game) {
+  // TODO if debug
+  game.debug.text(game.time.fps, 10, 20, '#fff')
+
   let lastBug = null
   const bugsGroup = Global.get('bugsGroup')
   const bagsGroup = Global.get('bagsGroup')
@@ -14,6 +17,9 @@ export function update (game) {
     // Utils.debug(bug)
     if (bug.body.y < game.height - bug.body.height - c.marginFloor) {
       bug.body.y = game.height - bug.body.height - c.marginFloor
+    }
+    if (bug.body.velocity.x < 10) {
+      bug.body.velocity.x = c.bugVelocity
     }
     if (bug.body.x > game.width) {
       bug.destroy()

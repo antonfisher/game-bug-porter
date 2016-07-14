@@ -15,6 +15,8 @@ export function createBag () {
   bag.body.collideWorldBounds = true
   bag.body.setSize(140 * c.scale, 180 * c.scale * 0.8, 0, 180 * c.scale * 0.2)
 
+  bag.smoothed = false
+
   bag.animations.add('move', [0, 1, 2, 3], 5, true)
   bag.animations.play('move')
 
@@ -69,6 +71,8 @@ export function createBug () {
   bug.body.velocity.x = c.bugVelocity
   bug.body.immovable = false
   bug.body.setSize(320 * c.scale, 220 * c.scale * 0.35, 0, 220 * c.scale * 0.5)
+
+  bug.smoothed = false
 
   bug.animations.add('move', [0, 1, 2, 3], 10, true)
   bug.animations.add('kill', [4, 5], 10, true)
