@@ -36,7 +36,8 @@ export function create (game) {
   bgFloor.smoothed = false
   backgroundGroup.add(bgFloor)
 
-  backgroundGroup.add(createDashLine())
+  backgroundGroup.add(createDashLine(c.scorePanelHeightPercent))
+  backgroundGroup.add(createDashLine(c.yBagMoveLimitPercent))
 
   bagsGroup.add(createBag())
   bugsGroup.add(createBug())

@@ -3,9 +3,13 @@
 import {Global} from './global.js'
 import {config as c} from './config.js'
 
-export function createBag () {
+export function createBag (position) {
   const game = Global.get('game')
-  const bag = game.add.sprite(game.width * c.scale / 2 - 140 * c.scale / 2, 0, 'bag')
+  const bag = game.add.sprite(
+    game.width * c.scale / 2 + 140 * c.scale * (position || 1),
+    game.height / c.scale * c.scorePanelHeightPercent,
+    'bag'
+  )
 
   game.physics.arcade.enable(bag)
 
@@ -37,12 +41,13 @@ export function createBag () {
       }
       sprite.x = x
 
-      const maxY = game.height / c.scale * c.yBagMoveLimit
+      const mixY = game.height / c.scale * c.scorePanelHeightPercent
+      const maxY = game.height / c.scale * c.yBagMoveLimitPercent - (bag.body.height / c.scale * 1.25)
       let y = (pointer.y + dy) / c.scale
       if (y > maxY) {
         y = maxY
-      } else if (y < 0) {
-        y = 0
+      } else if (y < mixY) {
+        y = mixY
       }
       sprite.y = y
     }, this)
@@ -81,10 +86,10 @@ export function createBug () {
   return bug
 }
 
-export function createDashLine () {
+export function createDashLine (limitPercent) {
   const game = Global.get('game')
   const bmd = game.add.bitmapData(game.width / c.scale, game.height / c.scale)
-  const maxY = game.height / c.scale * c.yBagMoveLimit + 180 / c.scale * c.yBagMoveLimit * 1.2
+  const maxY = game.height / c.scale * limitPercent
 
   bmd.ctx.beginPath()
   bmd.ctx.lineWidth = 2.5 / c.scale

@@ -5,6 +5,8 @@ import {Global} from '../cls/global.js'
 import {config as c} from '../cls/config.js'
 import {createBag, createBug} from '../cls/fabric.js'
 
+let _createBagEvent = null;
+
 export function update (game) {
   // TODO if debug
   game.debug.text(game.time.fps, 10, 20, '#fff')
@@ -32,7 +34,7 @@ export function update (game) {
     bugsGroup.add(createBug())
   }
 
-  let bagExists = false
+  let bagCount = 0
   bagsGroup.forEachExists((bag) => {
     // Utils.debug(bag)
     if (bag.body.y >= game.height - bag.body.height - c.marginFloor - 1) {
@@ -52,15 +54,21 @@ export function update (game) {
     } else if (bag.__tween && !bag.__tween.isPaused) {
       bag.__tween.pause()
     }
-    bagExists = true
 
     if (bag.body.x > game.width) {
       bag.destroy()
     }
+
+    bagCount++
   })
 
-  if (!bagExists) {
-    bagsGroup.add(createBag())
+  if (bagCount < 2 && !_createBagEvent) {
+    //_createBagEvent = game.time.events.add(Phaser.Timer.SECOND, () => {
+    _createBagEvent = setTimeout(() => {
+      bagsGroup.add(createBag(game.rnd.integerInRange(1, 5)))
+      //game.time.events.destroy(_createBagEvent)
+      _createBagEvent = null
+    }, Phaser.Timer.SECOND);
   }
 
   bugsGroup.forEachExists((bug) => {
