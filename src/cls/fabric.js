@@ -6,7 +6,7 @@ import {config as c} from './config.js'
 export function createBag (position) {
   const game = Global.get('game')
   const bag = game.add.sprite(
-    game.width * c.scale / 2 + 140 * c.scale * (position || 1),
+    (game.width / c.scale / 5) * (position || 1),
     game.height / c.scale * c.scorePanelHeightPercent,
     'bag'
   )
@@ -15,7 +15,7 @@ export function createBag (position) {
 
   //  Player physics properties. Give the little guy a slight bounce.
   bag.body.bounce.y = 0.2
-  bag.body.gravity.y = 0
+  bag.body.gravity.y = 5
   bag.body.collideWorldBounds = true
   bag.body.setSize(140 * c.scale, 180 * c.scale * 0.8, 0, 180 * c.scale * 0.2)
 

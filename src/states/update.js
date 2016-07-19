@@ -62,7 +62,7 @@ export function update (game) {
     bagCount++
   })
 
-  if (bagCount < 2 && !_createBagEvent) {
+  if (bagCount < 5 && !_createBagEvent) {
     //_createBagEvent = game.time.events.add(Phaser.Timer.SECOND, () => {
     _createBagEvent = setTimeout(() => {
       bagsGroup.add(createBag(game.rnd.integerInRange(1, 5)))
