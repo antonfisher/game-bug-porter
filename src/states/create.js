@@ -13,25 +13,16 @@ export function create (game) {
   game.time.advancedTiming = true
 
   const platformGroup = game.add.group()
-
-  platformGroup.scale.set(c.scale)
-
   const backgroundGroup = game.add.group(platformGroup)
   const bugsGroup = game.add.group(platformGroup)
   const bagsGroup = game.add.group(platformGroup)
 
-  const bgWood = game.add.tileSprite(0, 0, game.width / c.scale, game.height / c.scale - c.heightFloor, 'bg-wood')
+  const bgWood = game.add.tileSprite(0, 0, game.width, game.height - c.heightFloor, 'bg-wood')
   bgWood.alpha = 0.7
   bgWood.smoothed = false
   backgroundGroup.add(bgWood)
 
-  const bgFloor = game.add.tileSprite(
-    0,
-    game.height / c.scale - c.heightFloor,
-    game.width / c.scale,
-    game.height / c.scale,
-    'bg-floor'
-  )
+  const bgFloor = game.add.tileSprite(0, game.height - c.heightFloor, game.width, game.height, 'bg-floor')
   bgFloor.alpha = 0.7
   bgFloor.smoothed = false
   backgroundGroup.add(bgFloor)

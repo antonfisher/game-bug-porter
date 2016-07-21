@@ -5,11 +5,7 @@ import {config as c} from './config.js'
 
 export function createBag (position) {
   const game = Global.get('game')
-  const bag = game.add.sprite(
-    (game.width / c.scale / 5) * (position || 1),
-    game.height / c.scale * c.scorePanelHeightPercent,
-    'bag'
-  )
+  const bag = game.add.sprite((game.width / 5) * (position || 1), game.height * c.scorePanelHeightPercent, 'bag')
 
   game.physics.arcade.enable(bag)
 
@@ -17,7 +13,7 @@ export function createBag (position) {
   bag.body.bounce.y = 0.2
   bag.body.gravity.y = 5
   bag.body.collideWorldBounds = true
-  bag.body.setSize(140 * c.scale, 180 * c.scale * 0.8, 0, 180 * c.scale * 0.2)
+  bag.body.setSize(140, 180 * 0.8, 0, 180 * 0.2)
 
   bag.smoothed = false
 
@@ -28,12 +24,13 @@ export function createBag (position) {
   bag.input.enableDrag(false, false)
 
   bag.events.onDragStart.add((sprite, pointer) => {
+    const dy = sprite.y - pointer.y
+    const dx = sprite.x - pointer.x
+
     sprite.body.velocity.y = 0
-    const dy = sprite.y * c.scale - pointer.y
-    const dx = sprite.x * c.scale - pointer.x
     sprite.events.onDragUpdate.add((sprite, pointer) => {
-      const maxX = game.width / c.scale - bag.width
-      let x = (pointer.x + dx) / c.scale
+      const maxX = game.width - bag.width
+      let x = pointer.x + dx
       if (x > maxX) {
         x = maxX
       } else if (x < 0) {
@@ -41,9 +38,9 @@ export function createBag (position) {
       }
       sprite.x = x
 
-      const mixY = game.height / c.scale * c.scorePanelHeightPercent
-      const maxY = game.height / c.scale * c.yBagMoveLimitPercent - (bag.body.height / c.scale * 1.25)
-      let y = (pointer.y + dy) / c.scale
+      const mixY = game.height * c.scorePanelHeightPercent
+      const maxY = (game.height * c.yBagMoveLimitPercent) - (bag.body.height * 1.25)
+      let y = pointer.y + dy
       if (y > maxY) {
         y = maxY
       } else if (y < mixY) {
@@ -75,7 +72,7 @@ export function createBug () {
   bug.body.friction = 1
   bug.body.velocity.x = c.bugVelocity
   bug.body.immovable = false
-  bug.body.setSize(320 * c.scale, 220 * c.scale * 0.35, 0, 220 * c.scale * 0.5)
+  bug.body.setSize(320, 220 * 0.35, 0, 220 * 0.5)
 
   bug.smoothed = false
 
@@ -88,15 +85,15 @@ export function createBug () {
 
 export function createDashLine (limitPercent) {
   const game = Global.get('game')
-  const bmd = game.add.bitmapData(game.width / c.scale, game.height / c.scale)
-  const maxY = game.height / c.scale * limitPercent
+  const bmd = game.add.bitmapData(game.width, game.height)
+  const maxY = game.height * limitPercent
 
   bmd.ctx.beginPath()
-  bmd.ctx.lineWidth = 2.5 / c.scale
+  bmd.ctx.lineWidth = 2.5
   bmd.ctx.strokeStyle = '#4d4d4d'
-  bmd.ctx.setLineDash([13 / c.scale, 7 / c.scale])
+  bmd.ctx.setLineDash([13, 7])
   bmd.ctx.moveTo(10, maxY)
-  bmd.ctx.lineTo(game.width / c.scale, maxY)
+  bmd.ctx.lineTo(game.width, maxY)
   bmd.ctx.stroke()
   bmd.ctx.closePath()
 

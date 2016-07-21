@@ -30,7 +30,7 @@ export function update (game) {
     }
   })
 
-  if (!lastBug || (lastBug && lastBug.body.x > game.width * c.scale / 2)) {
+  if (!lastBug || (lastBug && lastBug.body.x > game.width / 2)) {
     bugsGroup.add(createBug())
   }
 
@@ -55,11 +55,11 @@ export function update (game) {
       bag.__tween.pause()
     }
 
-    if (bag.body.x > game.width) {
+    if (bag.body.x >= game.width) {
       bag.destroy()
+    } else {
+      bagCount++
     }
-
-    bagCount++
   })
 
   if (bagCount < 5 && !_createBagEvent) {
@@ -94,7 +94,7 @@ function collideUpBugsBags (bag, bug) {
     bag.body.velocity.y = 0
     bag.x = dx
     bag.y = 0
-    bag.body.setSize(140 * c.scale, 180 * c.scale, 0, 180 * c.scale * 0.45)
+    bag.body.setSize(140, 180, 0, 180 * 0.45)
     bug.addChild(bag)
   } else if (bag.x + bag.width > bug.x + bug.width - bug.width * 0.2 && bag.x < bug.x + bug.width) {
     bag.body.bounce.x = 0
@@ -103,7 +103,7 @@ function collideUpBugsBags (bag, bug) {
     bag.body.velocity.y = 0
     bag.x = dx
     bag.y = bug.height - bag.height
-    bag.body.setSize(140 * c.scale, 180 * c.scale, 0, 180 * c.scale * 0.2)
+    bag.body.setSize(140, 180, 0, 180 * 0.2)
     bug.body.velocity.x = c.bugVelocity * 0.3
 
     bug.addChild(bag)
