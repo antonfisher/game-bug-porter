@@ -54,6 +54,11 @@ export function update (game) {
     } else if (bag.__tween && !bag.__tween.isPaused) {
       bag.__tween.pause()
     }
+    const maxY = (game.height * c.yBagMoveLimitPercent) - (bag.body.height * 1.25)
+    if (bag.y > maxY) {
+      bag.inputEnabled = false
+      bag.body.gravity.y = c.bagDropGravity
+    }
 
     if (bag.body.x >= game.width) {
       bag.destroy()

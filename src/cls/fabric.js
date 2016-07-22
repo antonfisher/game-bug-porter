@@ -23,6 +23,9 @@ export function createBag (position) {
   bag.inputEnabled = true
   bag.input.enableDrag(false, false)
 
+  const mixY = game.height * c.scorePanelHeightPercent
+  const maxY = (game.height * c.yBagMoveLimitPercent) - (bag.body.height * 1.25)
+
   bag.events.onDragStart.add((sprite, pointer) => {
     const dy = sprite.y - pointer.y
     const dx = sprite.x - pointer.x
@@ -38,8 +41,6 @@ export function createBag (position) {
       }
       sprite.x = x
 
-      const mixY = game.height * c.scorePanelHeightPercent
-      const maxY = (game.height * c.yBagMoveLimitPercent) - (bag.body.height * 1.25)
       let y = pointer.y + dy
       if (y > maxY) {
         y = maxY
@@ -53,8 +54,8 @@ export function createBag (position) {
   bag.events.onDragStop.add((sprite) => {
     sprite.events.onDragUpdate.removeAll()
     sprite.input.disableDrag()
-    sprite.body.gravity.y = 300
-    sprite.body.velocity.y = 25
+    sprite.body.gravity.y = c.bagDropGravity
+    sprite.body.velocity.y = c.bagDropVelocity
   }, this)
 
   return bag
@@ -87,13 +88,14 @@ export function createDashLine (limitPercent) {
   const game = Global.get('game')
   const bmd = game.add.bitmapData(game.width, game.height)
   const maxY = game.height * limitPercent
+  const width = game.height / 250
 
   bmd.ctx.beginPath()
-  bmd.ctx.lineWidth = 2.5
+  bmd.ctx.lineWidth = width
   bmd.ctx.strokeStyle = '#4d4d4d'
-  bmd.ctx.setLineDash([13, 7])
-  bmd.ctx.moveTo(10, maxY)
-  bmd.ctx.lineTo(game.width, maxY)
+  bmd.ctx.setLineDash([width * 4, width * 3])
+  bmd.ctx.moveTo(width, maxY)
+  bmd.ctx.lineTo(game.width - width, maxY)
   bmd.ctx.stroke()
   bmd.ctx.closePath()
 
