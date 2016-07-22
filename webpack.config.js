@@ -20,7 +20,7 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        compact: true,
+        compact: false,
         presets: ['es2015', 'stage-0'],
         plugins: [
           ['transform-decorators-legacy']
@@ -37,7 +37,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {from: 'phaser/build/phaser.min.js'},
-      {from: 'assets/*'}
+      {from: 'assets/*'},
+      {from: 'assets/font/*'}
     ])
   ],
   devServer: {

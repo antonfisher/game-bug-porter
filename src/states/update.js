@@ -8,9 +8,6 @@ import {createBag, createBug} from '../cls/fabric.js'
 let _createBagEvent = null;
 
 export function update (game) {
-  // TODO if debug
-  game.debug.text(game.time.fps, 10, 20, '#fff')
-
   let lastBug = null
   const bugsGroup = Global.get('bugsGroup')
   const bagsGroup = Global.get('bagsGroup')

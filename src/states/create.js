@@ -9,9 +9,6 @@ export function create (game) {
   game.physics.startSystem(Phaser.Physics.ARCADE)
   game.world.setBounds(-350, 0, game.width + 700, game.height - c.marginFloor)
 
-  // TODO if debug
-  game.time.advancedTiming = true
-
   const platformGroup = game.add.group()
   const backgroundGroup = game.add.group(platformGroup)
   const bugsGroup = game.add.group(platformGroup)
@@ -27,7 +24,7 @@ export function create (game) {
   bgFloor.smoothed = false
   backgroundGroup.add(bgFloor)
 
-  backgroundGroup.add(createDashLine(c.scorePanelHeightPercent))
+  //backgroundGroup.add(createDashLine(c.scorePanelHeightPercent))
   backgroundGroup.add(createDashLine(c.yBagMoveLimitPercent))
 
   bagsGroup.add(createBag())
@@ -35,4 +32,14 @@ export function create (game) {
 
   Global.set('bugsGroup', bugsGroup)
   Global.set('bagsGroup', bagsGroup)
+
+  let t = 60;
+  const text = game.add.bitmapText(0, game.height / 150, 'pixel',' * :' + t-- + ' ', game.height / 140)
+  const deadline = setInterval(function () {
+    t--
+    if (t === 0) {
+      clearInterval(deadline)
+    }
+    text.setText(' * :' + t + ' ')
+  }, 1000)
 }
