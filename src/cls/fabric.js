@@ -3,11 +3,33 @@
 import {Global} from './global.js'
 import {config as c} from './config.js'
 
-export function createBag (position) {
+let bagsPositions = []
+
+export function createBag () {
+  let position = null
+
   const game = Global.get('game')
-  const bag = game.add.sprite((game.width / 5) * (position || 1), game.height * c.scorePanelHeightPercent, 'bag')
+  const freePositions = Array(c.bagMaxCount).fill().map((v, k) => k).filter((i) => {
+    return !bagsPositions.includes(i)
+  })
+
+  if (freePositions.length) {
+    position = freePositions[game.rnd.integerInRange(0, freePositions.length - 1)]
+    bagsPositions.push(position)
+    game.time.events.add(Phaser.Timer.SECOND * 3, () => {
+      bagsPositions.splice(bagsPositions.indexOf(position), 1)
+    })
+  }
+
+  const bag = game.add.sprite(
+    (game.width / 5 * position) + (game.width / 40),
+    game.height * c.scorePanelHeightPercent,
+    'bag'
+  )
 
   game.physics.arcade.enable(bag)
+
+  bag._position = position
 
   //  Player physics properties. Give the little guy a slight bounce.
   bag.body.bounce.y = 0.2

@@ -66,9 +66,9 @@ export function update (game) {
 
   if (bagCount < c.bagMaxCount && !_createBagEvent) {
     _createBagEvent = game.time.events.add(Phaser.Timer.SECOND, () => {
-      bagsGroup.add(createBag(game.rnd.integerInRange(1, 5)))
+      bagsGroup.add(createBag())
       _createBagEvent = null
-    });
+    })
   }
 
   bugsGroup.forEachExists((bug) => {
