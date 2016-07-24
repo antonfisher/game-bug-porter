@@ -11,7 +11,7 @@ export function createBag (position) {
 
   //  Player physics properties. Give the little guy a slight bounce.
   bag.body.bounce.y = 0.2
-  bag.body.gravity.y = 5
+  bag.body.gravity.y = c.bagStartupGravity
   bag.body.collideWorldBounds = true
   bag.body.setSize(140, 180 * 0.8, 0, 180 * 0.2)
 
