@@ -84,9 +84,23 @@ export function update (game) {
     bug.body.checkCollision.right = true
   })
   game.physics.arcade.collide(bagsGroup, bugsGroup)
+  game.physics.arcade.collide(bagsGroup, bagsGroup)
 }
 
-function collideUpBugsBags (bag, bug) {
+function collideUpBugsBags (obj1, obj2) {
+  let bug
+  let bag
+
+  if (obj1.key === 'bug') {
+    bug = obj1
+    bag = obj2
+  } else if (obj2.key === 'bug') {
+    bug = obj2
+    bag = obj1
+  } else {
+    return;
+  }
+
   const dx = Math.abs(bug.x - bag.x)
 
   if (bag.x > bug.x - bag.width * 0.4 && bag.x + bag.width < bug.x + bug.width - bug.width * 0.2) {
