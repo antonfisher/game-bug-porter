@@ -64,13 +64,11 @@ export function update (game) {
     }
   })
 
-  if (bagCount < 5 && !_createBagEvent) {
-    //_createBagEvent = game.time.events.add(Phaser.Timer.SECOND, () => {
-    _createBagEvent = setTimeout(() => {
+  if (bagCount < c.bagMaxCount && !_createBagEvent) {
+    _createBagEvent = game.time.events.add(Phaser.Timer.SECOND, () => {
       bagsGroup.add(createBag(game.rnd.integerInRange(1, 5)))
-      //game.time.events.destroy(_createBagEvent)
       _createBagEvent = null
-    }, Phaser.Timer.SECOND);
+    });
   }
 
   bugsGroup.forEachExists((bug) => {

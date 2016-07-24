@@ -8,5 +8,7 @@ export const config = {
   bugVelocity: 100,
   bagStartupGravity: 15,
   bagDropGravity: 300,
-  bagDropVelocity: 25
+  bagDropVelocity: 25,
+  bagMaxCount: 5,
+  matchTimeout: 15
 }

@@ -33,13 +33,12 @@ export function create (game) {
   Global.set('bugsGroup', bugsGroup)
   Global.set('bagsGroup', bagsGroup)
 
-  let t = 60;
-  const text = game.add.bitmapText(0, game.height / 150, 'pixel',' * :' + t-- + ' ', game.height / 140)
-  const deadline = setInterval(function () {
-    t--
+  let t = c.matchTimeout;
+  const text = game.add.bitmapText(0, game.height / 150, 'pixel', ' * :' + t-- + ' ', game.height / 140)
+  var deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.matchTimeout * 2, () => {
     if (t === 0) {
-      clearInterval(deadline)
+      game.time.events.remove(deadline)
     }
-    text.setText(' * :' + t + ' ')
-  }, 1000)
+    text.setText(' * :' + (t--) + ' ')
+  })
 }
