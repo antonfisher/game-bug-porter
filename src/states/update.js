@@ -5,7 +5,7 @@ import {Global} from '../cls/global.js'
 import {config as c} from '../cls/config.js'
 import {createBag, createBug} from '../cls/fabric.js'
 
-let _createBagEvent = null;
+let _createBagEvent = null
 
 export function update (game) {
   let lastBug = null
@@ -96,7 +96,7 @@ function collideUpBugsBags (obj1, obj2) {
     bug = obj2
     bag = obj1
   } else {
-    return;
+    return
   }
 
   const dx = Math.abs(bug.x - bag.x)
