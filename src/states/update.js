@@ -27,7 +27,11 @@ export function update (game) {
     }
   })
 
-  if (!lastBug || (lastBug && lastBug.body.x > game.width / 2)) {
+  if (
+    !lastBug
+    || (lastBug && lastBug.body.x > game.width / 2 && game.rnd.integerInRange(0, 100) < 2)
+    || (lastBug && lastBug.body.x > game.width / 5 && game.rnd.integerInRange(0, 1000) < 3)
+  ) {
     bugsGroup.add(createBug())
   }
 
@@ -51,7 +55,7 @@ export function update (game) {
     } else if (bag.__tween && !bag.__tween.isPaused) {
       bag.__tween.pause()
     }
-    const maxY = (game.height * c.yBagMoveLimitPercent) - (bag.body.height * 1.25)
+    const maxY = (game.height * c.yBagMoveLimitPercent) - (bag.body.height * 1.25) + 10
     if (bag.y > maxY) {
       bag.inputEnabled = false
       bag.body.gravity.y = c.bagDropGravity
@@ -102,6 +106,7 @@ function collideUpBugsBags (obj1, obj2) {
   const dx = Math.abs(bug.x - bag.x)
 
   if (bag.x > bug.x - bag.width * 0.4 && bag.x + bag.width < bug.x + bug.width - bug.width * 0.2) {
+    const bagsGroup = Global.get('bagsGroup')
     bag.body.bounce.x = 0
     bag.body.bounce.y = 0
     bag.body.velocity.x = 0
@@ -109,6 +114,7 @@ function collideUpBugsBags (obj1, obj2) {
     bag.x = dx
     bag.y = 0
     bag.body.setSize(140, 180, 0, 180 * 0.45)
+    bagsGroup.remove(bag);
     bug.addChild(bag)
   } else if (bag.x + bag.width > bug.x + bug.width - bug.width * 0.2 && bag.x < bug.x + bug.width) {
     bag.body.bounce.x = 0
