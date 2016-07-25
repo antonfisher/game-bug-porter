@@ -21,6 +21,7 @@ export function update (game) {
       bug.body.velocity.x = c.bugVelocity
     }
     if (bug.body.x > game.width) {
+      Global.get('scoreObj').increaseScore(1 + 10 * bug.children.length)
       bug.destroy()
     } else if (!lastBug || lastBug.body.x > bug.body.x) {
       lastBug = bug
@@ -28,9 +29,9 @@ export function update (game) {
   })
 
   if (
-    !lastBug
-    || (lastBug && lastBug.body.x > game.width / 2 && game.rnd.integerInRange(0, 100) < 2)
-    || (lastBug && lastBug.body.x > game.width / 5 && game.rnd.integerInRange(0, 1000) < 3)
+    !lastBug ||
+    (lastBug && lastBug.body.x > game.width / 2 && game.rnd.integerInRange(0, 100) < 2) ||
+    (lastBug && lastBug.body.x > game.width / 5 && game.rnd.integerInRange(0, 1000) < 3)
   ) {
     bugsGroup.add(createBug())
   }
@@ -114,7 +115,7 @@ function collideUpBugsBags (obj1, obj2) {
     bag.x = dx
     bag.y = 0
     bag.body.setSize(140, 180, 0, 180 * 0.45)
-    bagsGroup.remove(bag);
+    bagsGroup.remove(bag)
     bug.addChild(bag)
   } else if (bag.x + bag.width > bug.x + bug.width - bug.width * 0.2 && bag.x < bug.x + bug.width) {
     bag.body.bounce.x = 0

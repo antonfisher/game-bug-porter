@@ -1,6 +1,7 @@
 'use strict'
 
 import {Global} from '../cls/global.js'
+import {Score} from '../cls/score.js'
 import {config as c} from '../cls/config.js'
 import {createBag, createBug, createDashLine} from '../cls/fabric.js'
 
@@ -33,11 +34,13 @@ export function create (game) {
   Global.set('bagsGroup', bagsGroup)
 
   let t = c.matchTimeout
-  const text = game.add.bitmapText(0, game.height / 150, 'pixel', ' * :' + t-- + ' ', game.height / 140)
-  var deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.matchTimeout * 2, () => {
+  const text = game.add.bitmapText(0, game.height / 150, 'pixel', ' ^ :' + t-- + ' ', game.height / 140)
+  const deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.matchTimeout * 2, () => {
     if (t === 0) {
       game.time.events.remove(deadline)
     }
-    text.setText(' * :' + (t--) + ' ')
+    text.setText(' ^ :' + (t--) + ' ')
   })
+
+  Global.set('scoreObj', new Score(game))
 }
