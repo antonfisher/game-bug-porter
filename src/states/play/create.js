@@ -1,12 +1,14 @@
 'use strict'
 
-import {Global} from '../cls/global.js'
-import {Score} from '../cls/score.js'
-import {config as c} from '../cls/config.js'
-import {createBag, createBug, createDashLine} from '../cls/fabric.js'
+import {Global} from '../../cls/global.js'
+import {Score} from '../../cls/score.js'
+import {Utils} from '../../cls/utils.js'
+import {config as c} from '../../cls/config.js'
+import {createBag, createBug, createDashLine} from '../../cls/fabric.js'
 
 export function create (game) {
-  game.stage.smoothed = false
+  Utils.normalizeScale(game)
+
   game.physics.startSystem(Phaser.Physics.ARCADE)
   game.world.setBounds(-350, 0, game.width + 700, game.height - c.marginFloor)
 
@@ -38,6 +40,7 @@ export function create (game) {
   const deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.matchTimeout * 2, () => {
     if (t === 0) {
       game.time.events.remove(deadline)
+      game.state.start('menu')
     }
     text.setText(' ^ :' + (t--) + ' ')
   })

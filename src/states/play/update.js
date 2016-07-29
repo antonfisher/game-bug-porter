@@ -1,9 +1,9 @@
 'use strict'
 
 // import {Utils} from '../cls/utils.js'
-import {Global} from '../cls/global.js'
-import {config as c} from '../cls/config.js'
-import {createBag, createBug} from '../cls/fabric.js'
+import {Global} from '../../cls/global.js'
+import {config as c} from '../../cls/config.js'
+import {createBag, createBug} from '../../cls/fabric.js'
 
 let _createBagEvent = null
 

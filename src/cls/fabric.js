@@ -123,3 +123,36 @@ export function createDashLine (limitPercent) {
 
   return game.add.sprite(0, 0, bmd)
 }
+
+export function createButton (spriteTag, onClick) {
+  const game = Global.get('game')
+  const offset = new Phaser.Point(15, 15)
+  const btnGroup = game.add.group()
+  const configure = (b) => {
+    b.scale.set(2)
+    b.anchor.setTo(0.5)
+    b.smoothed = false
+    b.x = game.width / 2
+  }
+
+  const btn = game.add.sprite(0, 0, spriteTag)
+  configure(btn)
+  btn.x = game.width / 2
+  btn.y = game.height / 2 - btn.height * 2
+
+  btn.inputEnabled = true
+  btn.events.onInputDown.add(onClick, game)
+
+  const shadow = game.add.sprite(0, 0, spriteTag)
+  configure(shadow)
+  shadow.y = game.height / 2 - shadow.height * 2
+  shadow.tint = 0x000000
+  shadow.alpha = 0.4
+
+  shadow.x = btn.x + offset.x
+  shadow.y = btn.y + offset.y
+
+  btnGroup.add(shadow)
+  btnGroup.add(btn)
+  return btnGroup
+}
