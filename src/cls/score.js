@@ -1,5 +1,7 @@
 'use strict'
 
+import {config as c} from './config.js'
+
 export class Score {
 
   constructor (game) {
@@ -7,6 +9,7 @@ export class Score {
     this.score = 0
     this.obj = this._game.add.bitmapText(0, this._game.height / 150, 'pixel', '', this._game.height / 140)
     this.setScore(this.score)
+    this.timeout = c.matchTimeout
   }
 
   setScore (score) {
@@ -16,6 +19,15 @@ export class Score {
   }
 
   increaseScore (increment) {
+    this.timeout = c.matchTimeout
     this.setScore(this.score + increment)
+  }
+
+  getTimeout () {
+    return this.timeout
+  }
+
+  decreaseTimeout () {
+    return this.timeout--
   }
 }

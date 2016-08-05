@@ -34,16 +34,23 @@ export function create (game) {
 
   Global.set('bugsGroup', bugsGroup)
   Global.set('bagsGroup', bagsGroup)
+  Global.set('bagMaxCount', c.bagMaxCount)
 
-  let t = c.matchTimeout
-  const text = game.add.bitmapText(0, game.height / 150, 'pixel', ' ^ :' + t-- + ' ', game.height / 140)
-  const deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.matchTimeout * 2, () => {
-    if (t === 0) {
+  let gameTime = 0
+  const score = new Score(game)
+  const initTimeout = score.decreaseTimeout()
+  const text = game.add.bitmapText(0, game.height / 150, 'pixel', ' ^ :' + initTimeout + ' ', game.height / 140)
+  const deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.matchTimeout * 100000, () => {
+    const timeout = score.decreaseTimeout()
+    if (timeout === 0) {
       game.time.events.remove(deadline)
       game.state.start('menu')
     }
-    text.setText(' ^ :' + (t--) + ' ')
+    text.setText(' ^ :' + timeout + ' ')
+    if ((gameTime++) % 5 === 0) {
+      Global.set('bagMaxCount', Global.get('bagMaxCount') + 1)
+    }
   })
 
-  Global.set('scoreObj', new Score(game))
+  Global.set('scoreObj', score)
 }
