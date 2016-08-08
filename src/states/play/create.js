@@ -4,7 +4,7 @@ import {Global} from '../../cls/global.js'
 import {Score} from '../../cls/score.js'
 import {Utils} from '../../cls/utils.js'
 import {config as c} from '../../cls/config.js'
-import {createBag, createBug, createDashLine} from '../../cls/fabric.js'
+import {createBag, createBug, createDashLine, createButton} from '../../cls/fabric.js'
 
 export function create (game) {
   Utils.normalizeScale(game)
@@ -16,6 +16,7 @@ export function create (game) {
   const backgroundGroup = game.add.group(platformGroup)
   const bugsGroup = game.add.group(platformGroup)
   const bagsGroup = game.add.group(platformGroup)
+  const buttonsGroup = game.add.group(platformGroup)
 
   const bgWood = game.add.tileSprite(0, 0, game.width, game.height - c.heightFloor, 'bg-wood')
   bgWood.alpha = 0.7
@@ -40,11 +41,14 @@ export function create (game) {
   const score = new Score(game)
   const initTimeout = score.decreaseTimeout()
   const text = game.add.bitmapText(0, game.height / 150, 'pixel', ' ^ :' + initTimeout + ' ', game.height / 140)
-  const deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.matchTimeout * 100000, () => {
+  const deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.initTimeout * 100000, () => {
     const timeout = score.decreaseTimeout()
     if (timeout === 0) {
       game.time.events.remove(deadline)
-      game.state.start('menu')
+      const btnScore = createButton('btn-score', () => {
+        game.state.start('menu')
+      })
+      buttonsGroup.add(btnScore)
     }
     text.setText(' ^ :' + timeout + ' ')
     if ((gameTime++) % 5 === 0) {

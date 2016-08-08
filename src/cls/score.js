@@ -9,7 +9,7 @@ export class Score {
     this.score = 0
     this.obj = this._game.add.bitmapText(0, this._game.height / 150, 'pixel', '', this._game.height / 140)
     this.setScore(this.score)
-    this.timeout = c.matchTimeout
+    this.timeout = c.initTimeout
   }
 
   setScore (score) {
@@ -19,12 +19,16 @@ export class Score {
   }
 
   increaseScore (increment) {
-    this.timeout = c.matchTimeout
+    this.timeout = c.initTimeout
     this.setScore(this.score + increment)
   }
 
   getTimeout () {
     return this.timeout
+  }
+
+  increaseTimeout (add) {
+    return (this.timeout += (add || 1))
   }
 
   decreaseTimeout () {

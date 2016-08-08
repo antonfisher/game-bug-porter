@@ -10,5 +10,5 @@ export const config = {
   bagDropGravity: 300,
   bagDropVelocity: 25,
   bagMaxCount: 3,
-  matchTimeout: 15
+  initTimeout: 5
 }

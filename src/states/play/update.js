@@ -21,6 +21,7 @@ export function update (game) {
       bug.body.velocity.x = c.bugVelocity
     }
     if (bug.body.x > game.width) {
+      Global.get('scoreObj').increaseTimeout(5 + Math.round(2.5 * bug.children.length))
       Global.get('scoreObj').increaseScore(1 + 10 * bug.children.length)
       bug.destroy()
     } else if (!lastBug || lastBug.body.x > bug.body.x) {
