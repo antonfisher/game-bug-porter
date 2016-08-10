@@ -57,7 +57,7 @@ export function create (game) {
       textTime.destroy()
     }
     textTime.setText(' ^ :' + timeout + ' ')
-    if ((gameTime++) % 5 === 0) {
+    if ((gameTime++) % c.bagIncreaseCountEvery === 0) {
       Global.set('bagMaxCount', Global.get('bagMaxCount') + 1)
     }
   })

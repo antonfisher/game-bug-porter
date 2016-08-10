@@ -34,7 +34,7 @@ export function update (game) {
   if (
     !lastBug ||
     (lastBug && lastBug.body.x > game.width / 2 && game.rnd.integerInRange(0, 100) < 2) ||
-    (lastBug && lastBug.body.x > game.width / 5 && game.rnd.integerInRange(0, 1000) < 3)
+    (lastBug && lastBug.body.x > game.width / 5 && game.rnd.integerInRange(0, 1000) < 10)
   ) {
     bugsGroup.add(createBug())
   }

@@ -7,7 +7,7 @@ let bagsPositions = []
 
 export function createBag () {
   let position = null
-  const bagMaxCount = Global.get('bagMaxCount');
+  const bagMaxCount = Global.get('bagMaxCount') || c.bagMaxCount
 
   const game = Global.get('game')
   const freePositions = Array(bagMaxCount).fill().map((v, k) => k).filter((i) => {
@@ -23,7 +23,7 @@ export function createBag () {
   }
 
   const bag = game.add.sprite(
-    (game.width / bagMaxCount * position) + (game.width / 40),
+    ((game.width - 140 - game.width / 35) / bagMaxCount * position) + (game.width / 35),
     game.height * c.scorePanelHeightPercent,
     'bag'
   )

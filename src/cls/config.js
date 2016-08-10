@@ -9,6 +9,7 @@ export const config = {
   bagStartupGravity: 15,
   bagDropGravity: 300,
   bagDropVelocity: 25,
+  bagIncreaseCountEvery: 23,
   bagMaxCount: 3,
   initTimeout: 30
 }
