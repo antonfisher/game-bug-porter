@@ -6,16 +6,14 @@ export class Score {
 
   constructor (game) {
     this._game = game
-    this.score = 0
-    this.obj = this._game.add.bitmapText(0, this._game.height / 150, 'pixel', '', this._game.height / 140)
-    this.setScore(this.score)
-    this.timeout = c.initTimeout
+    this.textScore = this._game.add.bitmapText(0, this._game.height / 150, 'pixel', '', this._game.height / 140)
+    this.reset()
   }
 
   setScore (score) {
     this.score = (score || 0)
-    this.obj.setText(' * ' + score + ' ')
-    this.obj.x = this._game.width - this.obj.width
+    this.textScore.setText(' * ' + score + ' ')
+    this.textScore.x = this._game.width - this.textScore.width
   }
 
   increaseScore (increment) {
@@ -33,5 +31,23 @@ export class Score {
 
   decreaseTimeout () {
     return this.timeout--
+  }
+
+  gameOver () {
+    this._gameOn = false
+    this.textScore.fontSize *= 1.5
+    this.textScore.x = this._game.width / 2 - this.textScore.width / 2
+    this.textScore.y = this._game.height / 2 - this.textScore.height / 2
+  }
+
+  gameOn () {
+    return this._gameOn
+  }
+
+  reset () {
+    this._gameOn = true
+    this.score = 0
+    this.setScore(this.score)
+    this.timeout = c.initTimeout
   }
 }

@@ -27,8 +27,10 @@ export function create (game) {
   bgFloor.alpha = 0.7
   bgFloor.smoothed = false
   backgroundGroup.add(bgFloor)
-
   backgroundGroup.add(createDashLine(c.yBagMoveLimitPercent))
+
+  const score = new Score(game)
+  Global.set('scoreObj', score)
 
   bagsGroup.add(createBag())
   bugsGroup.add(createBug())
@@ -38,9 +40,8 @@ export function create (game) {
   Global.set('bagMaxCount', c.bagMaxCount)
 
   let gameTime = 0
-  const score = new Score(game)
   const initTimeout = score.decreaseTimeout()
-  const text = game.add.bitmapText(0, game.height / 150, 'pixel', ' ^ :' + initTimeout + ' ', game.height / 140)
+  const textTime = game.add.bitmapText(0, game.height / 150, 'pixel', ' ^ :' + initTimeout + ' ', game.height / 140)
   const deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.initTimeout * 100000, () => {
     const timeout = score.decreaseTimeout()
     if (timeout === 0) {
@@ -48,13 +49,16 @@ export function create (game) {
       const btnScore = createButton('btn-score', () => {
         game.state.start('menu')
       })
+      score.gameOver()
       buttonsGroup.add(btnScore)
+      bagsGroup.forEachExists((bag) => {
+        bag.inputEnabled = false
+      })
+      textTime.destroy()
     }
-    text.setText(' ^ :' + timeout + ' ')
+    textTime.setText(' ^ :' + timeout + ' ')
     if ((gameTime++) % 5 === 0) {
       Global.set('bagMaxCount', Global.get('bagMaxCount') + 1)
     }
   })
-
-  Global.set('scoreObj', score)
 }

@@ -7,9 +7,10 @@ let bagsPositions = []
 
 export function createBag () {
   let position = null
+  const bagMaxCount = Global.get('bagMaxCount');
 
   const game = Global.get('game')
-  const freePositions = Array(c.bagMaxCount).fill().map((v, k) => k).filter((i) => {
+  const freePositions = Array(bagMaxCount).fill().map((v, k) => k).filter((i) => {
     return !bagsPositions.includes(i)
   })
 
@@ -22,7 +23,7 @@ export function createBag () {
   }
 
   const bag = game.add.sprite(
-    (game.width / 5 * position) + (game.width / 40),
+    (game.width / bagMaxCount * position) + (game.width / 40),
     game.height * c.scorePanelHeightPercent,
     'bag'
   )
@@ -42,8 +43,10 @@ export function createBag () {
   bag.animations.add('move', [0, 1, 2, 3], 5, true)
   bag.animations.play('move')
 
-  bag.inputEnabled = true
-  bag.input.enableDrag(false, false)
+  if (Global.get('scoreObj').gameOn()) {
+    bag.inputEnabled = true
+    bag.input.enableDrag(false, false)
+  }
 
   const mixY = game.height * c.scorePanelHeightPercent
   const maxY = (game.height * c.yBagMoveLimitPercent) - (bag.body.height * 1.25)
@@ -141,7 +144,15 @@ export function createButton (spriteTag, onClick) {
   btn.y = game.height / 2 - btn.height * 2
 
   btn.inputEnabled = true
-  btn.events.onInputDown.add(onClick, game)
+  btn.events.onInputDown.add(() => {
+    btn.x += offset.x / 2
+    btn.y += offset.y / 2
+  })
+  btn.events.onInputUp.add(() => {
+    btn.x -= offset.x / 2
+    btn.y -= offset.y / 2
+    onClick.bind(game)()
+  })
 
   const shadow = game.add.sprite(0, 0, spriteTag)
   configure(shadow)
