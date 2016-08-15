@@ -9,8 +9,8 @@ module.exports = {
     app: './src/app.js'
   },
   output: {
-    path: path.join(__dirname, 'dist'),
-    publicPath: '/',
+    path: path.join(__dirname, 'cordova', 'www'),
+    publicPath: '',
     filename: '[name].js'
   },
   devtool: 'inline-source-map',
@@ -42,7 +42,7 @@ module.exports = {
     ])
   ],
   devServer: {
-    contentBase: './dist',
+    contentBase: './cordova/www',
     historyApiFallback: true,
     stats: true
   }

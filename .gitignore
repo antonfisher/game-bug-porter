@@ -38,5 +38,8 @@ jspm_packages
 
 .idea
 phaser
-dist
 assets/alt
+cordova/hooks
+cordova/platforms
+cordova/plugins
+cordova/www

@@ -4,13 +4,15 @@
   "version": "0.1.0",
   "scripts": {
     "lint": "./node_modules/.bin/standard | ./node_modules/.bin/snazzy",
-    "build": "./node_modules/.bin/rimraf dist && ./node_modules/.bin/webpack --progress --profile",
-    "build-prod": "./node_modules/.bin/rimraf dist && ./node_modules/.bin/webpack --optimize-minimize",
+    "build": "./node_modules/.bin/rimraf cordova/www && ./node_modules/.bin/webpack --progress --profile",
+    "build-prod": "./node_modules/.bin/rimraf cordova/www && ./node_modules/.bin/webpack --optimize-minimize",
     "start": "npm run build && ./node_modules/.bin/webpack-dev-server --inline --progress --port 8080"
   },
   "standard": {
     "parser": "babel-eslint",
-    "globals": ["Phaser"]
+    "globals": [
+      "Phaser"
+    ]
   },
   "license": "MIT",
   "author": "Anton Fisher <a.fschr@gmail.com> (http://antonfisher.com)",
@@ -39,6 +41,7 @@
     "babel-preset-es2015": "6.x",
     "babel-preset-stage-0": "6.x",
     "copy-webpack-plugin": "^3.0.1",
+    "cordova": "^6.3.0",
     "css-loader": "0.x",
     "es6-promise": "3.x",
     "es6-shim": "0.x",
