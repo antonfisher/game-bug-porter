@@ -10,6 +10,10 @@ export class Score {
     this.reset()
   }
 
+  getScore () {
+    return this.score
+  }
+
   setScore (score) {
     this.score = (score || 0)
     this.textScore.setText(' * ' + score + ' ')
@@ -35,9 +39,7 @@ export class Score {
 
   gameOver () {
     this._gameOn = false
-    this.textScore.fontSize *= 1.5
-    this.textScore.x = this._game.width / 2 - this.textScore.width / 2
-    this.textScore.y = this._game.height / 2 - this.textScore.height / 2
+    this.textScore.destroy()
   }
 
   gameOn () {

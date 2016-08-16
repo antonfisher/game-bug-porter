@@ -4,7 +4,7 @@ import {Global} from '../../cls/global.js'
 import {Score} from '../../cls/score.js'
 import {Utils} from '../../cls/utils.js'
 import {config as c} from '../../cls/config.js'
-import {createBag, createBug, createDashLine, createButton} from '../../cls/fabric.js'
+import {createBag, createBug, createDashLine, createText} from '../../cls/fabric.js'
 
 export function create (game) {
   Utils.normalizeScale(game)
@@ -16,7 +16,6 @@ export function create (game) {
   const backgroundGroup = game.add.group(platformGroup)
   const bugsGroup = game.add.group(platformGroup)
   const bagsGroup = game.add.group(platformGroup)
-  const buttonsGroup = game.add.group(platformGroup)
 
   const bgWood = game.add.tileSprite(0, 0, game.width, game.height - c.heightFloor, 'bg-wood')
   bgWood.alpha = 0.7
@@ -46,11 +45,27 @@ export function create (game) {
     const timeout = score.decreaseTimeout()
     if (timeout === 0) {
       game.time.events.remove(deadline)
-      const btnScore = createButton('btn-score', () => {
+
+      const btnScore = createText(' SCORE', 9)
+      btnScore.x = game.width * 0.5
+      btnScore.y = game.height * 0.4
+
+      const btnScoreNumber = createText(' * ' + score.getScore() + ' ', 10)
+      btnScoreNumber.x = game.width * 0.5
+      btnScoreNumber.y = game.height * 0.5
+
+      const btnMenu = createText(' MENU', 7, () => {
         game.state.start('menu')
       })
+      btnMenu.x = game.width * 0.5
+      btnMenu.y = game.height * 0.7
+      const btnAgain = createText(' DONE AGAIN', 7, () => {
+        game.state.start('play')
+      })
+      btnAgain.x = game.width * 0.5
+      btnAgain.y = game.height * 0.8
+
       score.gameOver()
-      buttonsGroup.add(btnScore)
       bagsGroup.forEachExists((bag) => {
         bag.inputEnabled = false
       })

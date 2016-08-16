@@ -2,7 +2,7 @@
 
 import {Utils} from '../../cls/utils.js'
 import {config as c} from '../../cls/config.js'
-import {createButton} from '../../cls/fabric.js'
+import {createText} from '../../cls/fabric.js'
 
 export function create (game) {
   Utils.normalizeScale(game)
@@ -21,9 +21,15 @@ export function create (game) {
   bgFloor.smoothed = false
   backgroundGroup.add(bgFloor)
 
-  const btnPlay = createButton('btn-play', () => {
+  const btnPlay = createText(' PLAY', 12, () => {
     game.state.start('play')
   })
+  btnPlay.x = game.width * 0.5
+  btnPlay.y = game.height * 0.5
+
+  const authorText = createText(' ANTONFIHSER.COM', 2.75)
+  authorText.x = game.width * 0.5
+  authorText.y = game.height * 0.93
 
   buttonsGroup.add(btnPlay)
 }

@@ -127,43 +127,42 @@ export function createDashLine (limitPercent) {
   return game.add.sprite(0, 0, bmd)
 }
 
-export function createButton (spriteTag, onClick) {
+export function createText (value, fontSize = 5, onClick) {
   const game = Global.get('game')
-  const offset = new Phaser.Point(15, 15)
+  const offset = new Phaser.Point(fontSize * 1.5, fontSize * 1.5)
   const btnGroup = game.add.group()
   const configure = (b) => {
     b.scale.set(2)
     b.anchor.setTo(0.5)
     b.smoothed = false
-    b.x = game.width / 2
   }
 
-  const btn = game.add.sprite(0, 0, spriteTag)
-  configure(btn)
-  btn.x = game.width / 2
-  btn.y = game.height / 2 - btn.height * 2
+  const text = game.add.bitmapText(0, 0, 'pixel', value, fontSize)
+  configure(text)
 
-  btn.inputEnabled = true
-  btn.events.onInputDown.add(() => {
-    btn.x += offset.x / 2
-    btn.y += offset.y / 2
-  })
-  btn.events.onInputUp.add(() => {
-    btn.x -= offset.x / 2
-    btn.y -= offset.y / 2
-    onClick.bind(game)()
-  })
+  if (onClick) {
+    text.inputEnabled = true
+    text.events.onInputDown.add(() => {
+      text.x += offset.x / 2
+      text.y += offset.y / 2
+    })
+    text.events.onInputUp.add(() => {
+      text.x -= offset.x / 2
+      text.y -= offset.y / 2
+      onClick.bind(game)()
+    })
+  }
 
-  const shadow = game.add.sprite(0, 0, spriteTag)
+  const shadow = game.add.bitmapText(0, 0, 'pixel', value, fontSize)
   configure(shadow)
   shadow.y = game.height / 2 - shadow.height * 2
   shadow.tint = 0x000000
   shadow.alpha = 0.4
 
-  shadow.x = btn.x + offset.x
-  shadow.y = btn.y + offset.y
+  shadow.x = text.x + offset.x
+  shadow.y = text.y + offset.y
 
   btnGroup.add(shadow)
-  btnGroup.add(btn)
+  btnGroup.add(text)
   return btnGroup
 }
