@@ -1,12 +1,18 @@
 'use strict'
 
+import {Utils} from './utils.js'
+import {createText} from './fabric.js'
 import {config as c} from './config.js'
 
 export class Score {
 
   constructor (game) {
     this._game = game
-    this.textScore = this._game.add.bitmapText(0, this._game.height / 150, 'pixel', '', this._game.height / 140)
+
+    this.textScore = createText('', Utils.calculateFontSize(c.playStatsFontFactor))
+    this.textScore.setAnchor(0)
+    this.textScore.y = game.height / 150
+
     this.reset()
   }
 
@@ -16,8 +22,8 @@ export class Score {
 
   setScore (score) {
     this.score = (score || 0)
-    this.textScore.setText(' * ' + score + ' ')
-    this.textScore.x = this._game.width - this.textScore.width
+    this.textScore.setText(' * ' + score + '  ')
+    this.textScore.x = this._game.width - this.textScore.width + (this.textScore.width / (score.toString().length + 6))
   }
 
   increaseScore (increment) {

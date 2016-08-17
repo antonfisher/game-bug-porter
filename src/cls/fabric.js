@@ -149,7 +149,7 @@ export function createText (value, fontSize = 5, onClick) {
     text.events.onInputUp.add(() => {
       text.x -= offset.x / 2
       text.y -= offset.y / 2
-      onClick.bind(game)()
+      return onClick.call(game)
     })
   }
 
@@ -164,5 +164,16 @@ export function createText (value, fontSize = 5, onClick) {
 
   btnGroup.add(shadow)
   btnGroup.add(text)
+
+  btnGroup.setText = function (value) {
+    shadow.setText(value)
+    text.setText(value)
+  }
+
+  btnGroup.setAnchor = function (x, y) {
+    shadow.anchor.setTo(x, y)
+    text.anchor.setTo(x, y)
+  }
+
   return btnGroup
 }

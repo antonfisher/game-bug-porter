@@ -27,7 +27,19 @@ export function create (game) {
   btnPlay.x = game.width * 0.5
   btnPlay.y = game.height * 0.5
 
-  const authorText = createText(' ANTONFIHSER.COM', 2.75)
+  const authorText = createText(' ANTONFISHER.COM', 2.75, (event) => {
+    const address = 'http://antonfisher.com/about'
+    if (typeof device !== 'undefined' && device.platform && device.platform === 'iOS') {
+      window.open(address, '_system')
+      return false
+    } else if (typeof navigator !== 'undefined' && navigator.app && navigator.app.loadUrl) {
+      navigator.app.loadUrl(address, {openExternal : true})
+      return false
+    } else {
+      window.open(address, '_blank')
+      return false
+    }
+  })
   authorText.x = game.width * 0.5
   authorText.y = game.height * 0.93
 

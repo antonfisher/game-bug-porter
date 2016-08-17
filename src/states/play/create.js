@@ -40,7 +40,11 @@ export function create (game) {
 
   let gameTime = 0
   const initTimeout = score.decreaseTimeout()
-  const textTime = game.add.bitmapText(0, game.height / 150, 'pixel', ' ^ :' + initTimeout + ' ', game.height / 140)
+
+  const textTime = createText('  ^ :' + initTimeout + ' ', Utils.calculateFontSize(c.playStatsFontFactor))
+  textTime.setAnchor(0.1, 0)
+  textTime.y = game.height / 140
+
   const deadline = game.time.events.repeat(Phaser.Timer.SECOND, c.initTimeout * 100000, () => {
     const timeout = score.decreaseTimeout()
     if (timeout === 0) {
@@ -71,7 +75,7 @@ export function create (game) {
       })
       textTime.destroy()
     }
-    textTime.setText(' ^ :' + timeout + ' ')
+    textTime.setText('  ^ :' + timeout + ' ')
     if ((gameTime++) % c.bagIncreaseCountEvery === 0) {
       Global.set('bagMaxCount', Global.get('bagMaxCount') + 1)
     }

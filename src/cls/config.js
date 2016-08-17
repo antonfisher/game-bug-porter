@@ -11,5 +11,6 @@ export const config = {
   bagDropVelocity: 25,
   bagIncreaseCountEvery: 23,
   bagMaxCount: 3,
-  initTimeout: 1
+  initTimeout: 30,
+  playStatsFontFactor: 175
 }
