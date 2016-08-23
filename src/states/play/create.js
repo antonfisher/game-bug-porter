@@ -63,7 +63,7 @@ export function create (game) {
       })
       btnMenu.x = game.width * 0.5
       btnMenu.y = game.height * 0.7
-      const btnAgain = createText(' DONE AGAIN', 7, () => {
+      const btnAgain = createText(' PLAY AGAIN', 7, () => {
         game.state.start('play')
       })
       btnAgain.x = game.width * 0.5

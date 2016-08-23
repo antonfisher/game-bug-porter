@@ -1,6 +1,6 @@
 'use strict'
 
-// import {Utils} from '../cls/utils.js'
+import {Utils} from '../../cls/utils.js'
 import {Global} from '../../cls/global.js'
 import {config as c} from '../../cls/config.js'
 import {createBag, createBug} from '../../cls/fabric.js'
@@ -24,6 +24,7 @@ export function update (game) {
       if (Global.get('scoreObj').gameOn()) {
         Global.get('scoreObj').increaseTimeout(5 + Math.round(2.5 * bug.children.length))
         Global.get('scoreObj').increaseScore(1 + 10 * bug.children.length)
+        Utils.vibrate()
       }
       bug.destroy()
     } else if (!lastBug || lastBug.body.x > bug.body.x) {
@@ -34,7 +35,7 @@ export function update (game) {
   if (
     !lastBug ||
     (lastBug && lastBug.body.x > game.width / 2 && game.rnd.integerInRange(0, 100) < 2) ||
-    (lastBug && lastBug.body.x > game.width / 5 && game.rnd.integerInRange(0, 1000) < 10)
+    (lastBug && lastBug.body.x > game.width / 5 && game.rnd.integerInRange(0, 1000) < 15)
   ) {
     bugsGroup.add(createBug())
   }
@@ -122,6 +123,7 @@ function collideUpBugsBags (obj1, obj2) {
     bag.body.setSize(140, 180, 0, 180 * 0.45)
     bagsGroup.remove(bag)
     bug.addChild(bag)
+    bug.body.velocity.x -= 5
   } else if (bag.x + bag.width > bug.x + bug.width - bug.width * 0.2 && bag.x < bug.x + bug.width) {
     bag.body.bounce.x = 0
     bag.body.bounce.y = 0

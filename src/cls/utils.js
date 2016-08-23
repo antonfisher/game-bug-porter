@@ -25,4 +25,12 @@ export class Utils {
     return (Math.min(game.width, game.height) / factor)
   }
 
+  static vibrate (time = 250) {
+    if (navigator && navigator.vibrate) {
+      navigator.vibrate(time)
+    } else {
+      console.log('vibrate for:', time)
+    }
+  }
+
 }
