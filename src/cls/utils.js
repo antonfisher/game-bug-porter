@@ -20,7 +20,7 @@ export class Utils {
     game.stage.smoothed = false
   }
 
-  static calculateFontSize(factor = 1) {
+  static calculateFontSize (factor = 1) {
     const game = Global.get('game')
     return (Math.min(game.width, game.height) / factor)
   }

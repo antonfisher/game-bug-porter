@@ -4,14 +4,21 @@
   "version": "0.1.0",
   "scripts": {
     "lint": "./node_modules/.bin/standard | ./node_modules/.bin/snazzy",
-    "build": "./node_modules/.bin/rimraf cordova/www && ./node_modules/.bin/webpack --progress --profile",
-    "build-prod": "./node_modules/.bin/rimraf cordova/www && ./node_modules/.bin/webpack --optimize-minimize",
-    "start": "npm run build && ./node_modules/.bin/webpack-dev-server --inline --progress --port 8080"
+    "build-icons": "cd cordova && ../node_modules/.bin/cordova-icon && cd -",
+    "build-www": "./node_modules/.bin/rimraf cordova/www && ./node_modules/.bin/webpack --progress --profile",
+    "build-www-prod": "./node_modules/.bin/rimraf cordova/www && ./node_modules/.bin/webpack --optimize-minimize",
+    "build-android": "cd cordova && ../node_modules/.bin/cordova build android && cd -",
+    "build-android-prod": "cd cordova && ../node_modules/.bin/cordova build --release android && cd -",
+    "build": "npm run build-www && npm run build-icons && npm run build-android",
+    "build-prod": "npm run build-www-prod && npm run build-icons && npm run build-android-prod",
+    "emulate-android": "cd cordova && ../node_modules/.bin/cordova emulate android && cd -",
+    "start": "npm run build-www && ./node_modules/.bin/webpack-dev-server --inline --progress --port 8080"
   },
   "standard": {
     "parser": "babel-eslint",
     "globals": [
-      "Phaser"
+      "Phaser",
+      "device"
     ]
   },
   "license": "MIT",
@@ -42,6 +49,7 @@
     "babel-preset-stage-0": "6.x",
     "copy-webpack-plugin": "^3.0.1",
     "cordova": "^6.3.0",
+    "cordova-icon": "^0.7.0",
     "css-loader": "0.x",
     "es6-promise": "3.x",
     "es6-shim": "0.x",

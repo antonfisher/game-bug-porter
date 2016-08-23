@@ -33,7 +33,7 @@ export function create (game) {
       window.open(address, '_system')
       return false
     } else if (typeof navigator !== 'undefined' && navigator.app && navigator.app.loadUrl) {
-      navigator.app.loadUrl(address, {openExternal : true})
+      navigator.app.loadUrl(address, {openExternal: true})
       return false
     } else {
       window.open(address, '_blank')
