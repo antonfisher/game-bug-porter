@@ -2,7 +2,7 @@
 
 import {Utils} from '../../cls/utils.js'
 import {config as c} from '../../cls/config.js'
-import {createText} from '../../cls/fabric.js'
+import {createText, createBug} from '../../cls/fabric.js'
 
 export function create (game) {
   Utils.normalizeScale(game)
@@ -20,6 +20,12 @@ export function create (game) {
   bgFloor.alpha = 0.7
   bgFloor.smoothed = false
   backgroundGroup.add(bgFloor)
+
+  const bag = createBug()
+  bag.body.gravity = 0
+  bag.anchor.setTo(0.5)
+  bag.x = game.width * 0.49
+  bag.y = game.height * 0.25
 
   const btnPlay = createText(' PLAY', 12, () => {
     game.state.start('play')
