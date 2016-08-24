@@ -9,43 +9,47 @@ export class Score {
   constructor (game) {
     this._game = game
 
-    this.textScore = createText('', Utils.calculateFontSize(c.playStatsFontFactor))
-    this.textScore.setAnchor(0)
-    this.textScore.y = game.height / 150
+    this._textScore = createText('', Utils.calculateFontSize(c.playStatsFontFactor), () => {
+      this._timeout = 0
+    })
+    this._textScore.setAnchor(0)
+    this._textScore.y = game.height / 150
 
     this.reset()
   }
 
   getScore () {
-    return this.score
+    return this._score
   }
 
   setScore (score) {
-    this.score = (score || 0)
-    this.textScore.setText(' * ' + score + '  ')
-    this.textScore.x = this._game.width - this.textScore.width + (this.textScore.width / (score.toString().length + 6))
+    this._score = (score || 0)
+    this._textScore.setText(' * ' + score + '  ')
+    this._textScore.x = (
+      this._game.width - this._textScore.width + (this._textScore.width / (score.toString().length + 6))
+    )
   }
 
   increaseScore (increment) {
-    this.timeout = c.initTimeout
-    this.setScore(this.score + increment)
+    this._timeout = c.initTimeout
+    this.setScore(this._score + increment)
   }
 
   getTimeout () {
-    return this.timeout
+    return this._timeout
   }
 
   increaseTimeout (add) {
-    return (this.timeout += (add || 1))
+    return (this._timeout += (add || 1))
   }
 
   decreaseTimeout () {
-    return this.timeout--
+    return this._timeout--
   }
 
   gameOver () {
     this._gameOn = false
-    this.textScore.destroy()
+    this._textScore.destroy()
   }
 
   gameOn () {
@@ -54,8 +58,8 @@ export class Score {
 
   reset () {
     this._gameOn = true
-    this.score = 0
-    this.setScore(this.score)
-    this.timeout = c.initTimeout
+    this._score = 0
+    this.setScore(this._score)
+    this._timeout = c.initTimeout
   }
 }
