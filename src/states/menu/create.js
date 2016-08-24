@@ -1,6 +1,7 @@
 'use strict'
 
 import {Utils} from '../../cls/utils.js'
+import {Global} from '../../cls/global.js'
 import {config as c} from '../../cls/config.js'
 import {createText, createBug} from '../../cls/fabric.js'
 
@@ -33,7 +34,7 @@ export function create (game) {
   btnPlay.x = game.width * 0.5
   btnPlay.y = game.height * 0.5
 
-  const authorText = createText(' ANTONFISHER.COM', 2.75, (event) => {
+  const authorText = createText(' ANTONFISHER.COM', 2.75, () => {
     const address = 'http://antonfisher.com/about'
     if (typeof device !== 'undefined' && device.platform && device.platform === 'iOS') {
       window.open(address, '_system')
@@ -48,6 +49,17 @@ export function create (game) {
   })
   authorText.x = game.width * 0.5
   authorText.y = game.height * 0.93
+
+  Global.set('vibrationEnabled', true);
+  const ENABLE_VIBRATION_TEXT = '   ENABLE VIBRATION  '
+  const DISABLE_VIBRATION_TEXT = '  DISABLE VIBRATION  '
+  const disableVibrationText = createText(DISABLE_VIBRATION_TEXT, Utils.calculateFontSize(260), () => {
+    const vibrationEnabled = !Global.get('vibrationEnabled')
+    disableVibrationText.setText(vibrationEnabled ? DISABLE_VIBRATION_TEXT : ENABLE_VIBRATION_TEXT)
+    Global.set('vibrationEnabled', vibrationEnabled)
+  })
+  disableVibrationText.x = game.width * 0.5
+  disableVibrationText.y = game.height * 0.75
 
   buttonsGroup.add(btnPlay)
 }

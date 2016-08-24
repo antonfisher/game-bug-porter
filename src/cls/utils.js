@@ -26,10 +26,12 @@ export class Utils {
   }
 
   static vibrate (time = 250) {
-    if (navigator && navigator.vibrate) {
-      navigator.vibrate(time)
-    } else {
-      console.log('vibrate for:', time)
+    if (Global.get('vibrationEnabled')) {
+      if (navigator && navigator.vibrate) {
+        navigator.vibrate(time)
+      } else {
+        console.log('vibrate for:', time)
+      }
     }
   }
 
