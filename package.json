@@ -1,6 +1,6 @@
 {
   "name": "game-bug-porter",
-  "description": "HTML5 Game 'BugPorter'",
+  "description": "BugPorter HTML5 game, use bugs to deliver bags and got scores.",
   "version": "0.1.0",
   "scripts": {
     "lint": "./node_modules/.bin/standard | ./node_modules/.bin/snazzy",

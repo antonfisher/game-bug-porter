@@ -123,7 +123,9 @@ function collideUpBugsBags (obj1, obj2) {
     bag.body.setSize(140, 180, 0, 180 * 0.45)
     bagsGroup.remove(bag)
     bug.addChild(bag)
-    bug.body.velocity.x -= 5
+    if (bug.body.velocity.x > c.bugMinVelocity) {
+      bug.body.velocity.x -= Math.round((bug.body.velocity.x - c.bugMinVelocity) / 5)
+    }
   } else if (bag.x + bag.width > bug.x + bug.width - bug.width * 0.2 && bag.x < bug.x + bug.width) {
     bag.body.bounce.x = 0
     bag.body.bounce.y = 0
