@@ -24,7 +24,7 @@ export function create (game) {
   const bag = createBug()
   bag.body.gravity = 0
   bag.anchor.setTo(0.5)
-  bag.x = game.width * 0.49
+  bag.x = game.width * 0.52
   bag.y = game.height * 0.25
 
   const btnPlay = createText(' PLAY', 12, () => {
