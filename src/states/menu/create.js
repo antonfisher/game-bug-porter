@@ -51,8 +51,8 @@ export function create (game) {
   authorText.y = game.height * 0.93
 
   Global.set('vibrationEnabled', true)
-  const ENABLE_VIBRATION_TEXT = '   ENABLE VIBRATION  '
-  const DISABLE_VIBRATION_TEXT = '  DISABLE VIBRATION  '
+  const ENABLE_VIBRATION_TEXT = '  VIBRATION: ENABLED    '
+  const DISABLE_VIBRATION_TEXT = '  VIBRATION: DISABLED '
   const disableVibrationText = createText(DISABLE_VIBRATION_TEXT, Utils.calculateFontSize(260), () => {
     const vibrationEnabled = !Global.get('vibrationEnabled')
     disableVibrationText.setText(vibrationEnabled ? DISABLE_VIBRATION_TEXT : ENABLE_VIBRATION_TEXT)
