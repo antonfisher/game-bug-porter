@@ -34,6 +34,7 @@ export function create (game) {
   btnPlay.x = game.width * 0.5
   btnPlay.y = game.height * 0.5
 
+  // site link
   const authorText = createText(' ANTONFISHER.COM', 2.75, () => {
     const address = 'http://antonfisher.com/about'
     if (typeof device !== 'undefined' && device.platform && device.platform === 'iOS') {
@@ -50,16 +51,21 @@ export function create (game) {
   authorText.x = game.width * 0.5
   authorText.y = game.height * 0.93
 
-  Global.set('vibrationEnabled', true)
+  // vibration
+  const prevVibrationEnabled = Global.get('vibrationEnabled')
   const ENABLE_VIBRATION_TEXT = '  VIBRATION: ENABLED    '
   const DISABLE_VIBRATION_TEXT = '  VIBRATION: DISABLED '
-  const disableVibrationText = createText(DISABLE_VIBRATION_TEXT, Utils.calculateFontSize(260), () => {
-    const vibrationEnabled = !Global.get('vibrationEnabled')
-    disableVibrationText.setText(vibrationEnabled ? DISABLE_VIBRATION_TEXT : ENABLE_VIBRATION_TEXT)
-    Global.set('vibrationEnabled', vibrationEnabled)
+
+  Global.set('vibrationEnabled', (typeof prevVibrationEnabled === 'undefined' ? true : prevVibrationEnabled))
+
+  const text = (Global.get('vibrationEnabled') ? ENABLE_VIBRATION_TEXT : DISABLE_VIBRATION_TEXT)
+  const vibrationText = createText(text, Utils.calculateFontSize(260), () => {
+    const vibrationEnabled = Global.get('vibrationEnabled')
+    vibrationText.setText(vibrationEnabled ? DISABLE_VIBRATION_TEXT : ENABLE_VIBRATION_TEXT)
+    Global.set('vibrationEnabled', !vibrationEnabled)
   })
-  disableVibrationText.x = game.width * 0.5
-  disableVibrationText.y = game.height * 0.75
+  vibrationText.x = game.width * 0.5
+  vibrationText.y = game.height * 0.75
 
   buttonsGroup.add(btnPlay)
 }
