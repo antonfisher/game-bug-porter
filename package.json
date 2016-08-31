@@ -1,9 +1,10 @@
 {
   "name": "game-bug-porter",
-  "description": "BugPorter HTML5 game, use bugs to deliver bags and got scores.",
+  "description": "BugPorter HTML5 game, use bugs to deliver bags and get scores.",
   "version": "0.1.0",
   "scripts": {
     "lint": "./node_modules/.bin/standard | ./node_modules/.bin/snazzy",
+    "codrova-platforms": "cd cordova && ../node_modules/.bin/cordova platforms ls && cd -",
     "codrova-init": "cd cordova && ../node_modules/.bin/cordova plugin add cordova-plugin-vibration && cd -",
     "build-icons": "cd cordova && ../node_modules/.bin/cordova-icon && cd -",
     "build-www": "./node_modules/.bin/rimraf cordova/www && ./node_modules/.bin/webpack --progress --profile",
@@ -13,6 +14,11 @@
     "build": "npm run build-www && npm run build-icons && npm run build-android",
     "build-prod": "npm run build-www-prod && npm run build-icons && npm run build-android-prod",
     "emulate-android": "cd cordova && ../node_modules/.bin/cordova emulate android && cd -",
+    "android-key-generator": "cd cordova/platforms/android/build/outputs/apk && keytool -genkey -v -keystore android.keystore -alias bug-porter -keyalg RSA -keysize 2048 -validity 10000 && cp android.keystore ../../../../../../ && cd -",
+    "android-sign-a": "cd cordova/platforms/android/build/outputs/apk && jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore android.keystore android-armv7-release-unsigned.apk bug-porter && cd -",
+    "android-sign-x": "cd cordova/platforms/android/build/outputs/apk && jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore android.keystore android-x86-release-unsigned.apk bug-porter && cd -",
+    "android-zip-a": "cd cordova/platforms/android/build/outputs/apk && ~/android-sdk-linux/build-tools/23.0.3/zipalign -v 4 android-armv7-release-unsigned.apk android-armv7-release-signed.apk && cd -",
+    "android-zip-x": "cd cordova/platforms/android/build/outputs/apk && ~/android-sdk-linux/build-tools/23.0.3/zipalign -v 4 android-x86-release-unsigned.apk android-x86-release-signed.apk && cd -",
     "start": "npm run build-www && ./node_modules/.bin/webpack-dev-server --inline --progress --port 8080"
   },
   "standard": {
