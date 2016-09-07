@@ -1,5 +1,6 @@
 'use strict'
 
+import {GA} from '../../cls/ga.js'
 import {Utils} from '../../cls/utils.js'
 import {Global} from '../../cls/global.js'
 import {config as c} from '../../cls/config.js'
@@ -68,4 +69,6 @@ export function create (game) {
   vibrationText.y = game.height * 0.75
 
   buttonsGroup.add(btnPlay)
+
+  GA.trackView('Menu')
 }

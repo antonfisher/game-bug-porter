@@ -1,8 +1,9 @@
 'use strict'
 
-import {Global} from '../../cls/global.js'
+import {GA} from '../../cls/ga.js'
 import {Score} from '../../cls/score.js'
 import {Utils} from '../../cls/utils.js'
+import {Global} from '../../cls/global.js'
 import {config as c} from '../../cls/config.js'
 import {createBag, createBug, createDashLine, createText} from '../../cls/fabric.js'
 
@@ -74,10 +75,14 @@ export function create (game) {
         bag.inputEnabled = false
       })
       textTime.destroy()
+
+      GA.trackEvent('gameplay', 'gameover', 'score', score.getScore())
     }
     textTime.setText('  ^ :' + timeout + ' ')
     if ((gameTime++) % c.bagIncreaseCountEvery === 0) {
       Global.set('bagMaxCount', Global.get('bagMaxCount') + 1)
     }
   })
+
+  GA.trackView('Play')
 }

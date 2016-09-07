@@ -1,6 +1,7 @@
 'use strict'
 
 export const config = {
+  gaKey: 'UA-83797828-1',
   initTimeout: 30,
   heightFloor: 120,
   marginFloor: 18,
