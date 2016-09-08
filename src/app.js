@@ -6,7 +6,9 @@ import {config as c} from './cls/config.js'
 import {menuState} from './states/menu.js'
 import {playState} from './states/play.js'
 
-GA.init(c.gaKey)
+document.addEventListener('deviceready', function () {
+  GA.init(c.gaKey)
+}, false);
 
 const el = window.document.getElementById('game')
 const height = 1600
