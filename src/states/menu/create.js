@@ -57,7 +57,7 @@ export function create (game) {
   const ENABLE_VIBRATION_TEXT = '  VIBRATION: ENABLED    '
   const DISABLE_VIBRATION_TEXT = '  VIBRATION: DISABLED '
 
-  Global.set('vibrationEnabled', (typeof prevVibrationEnabled === 'undefined' ? true : prevVibrationEnabled))
+  Global.set('vibrationEnabled', (typeof prevVibrationEnabled === 'undefined' ? false : prevVibrationEnabled))
 
   const text = (Global.get('vibrationEnabled') ? ENABLE_VIBRATION_TEXT : DISABLE_VIBRATION_TEXT)
   const vibrationText = createText(text, Utils.calculateFontSize(260), () => {
