@@ -1,23 +1,34 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.antonfisher.bugPorter" version="1.0.0"
-        xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    >
     <name>BugPorter</name>
     <description>BugPorter game, use bugs to deliver bags and get scores.</description>
     <author email="a.fschr@gmail.com" href="http://antonfisher.com">Anton Fisher</author>
     <content src="index.html"/>
     <access origin="http://127.0.0.1*"/>
-    <access origin="http://*.google-analytics.com"/>
-    <access origin="https://*.google-analytics.com"/>
+    <access origin="*://*.google.com"/>
+    <access origin="*://google-analytics.com/*"/>
+    <access origin="*://*.google-analytics.com/*"/>
     <plugin name="cordova-plugin-whitelist" spec="1"/>
     <platform name="android">
         <allow-intent href="market:*"/>
+        <allow-intent href="http://antonfisher.com/*"/>
+        <!--<config-file target="AndroidManifest.xml" parent="/manifest">-->
+            <!--<uses-permission android:name="android.permission.INTERNET"/>-->
+            <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>-->
+        <!--</config-file>-->
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*"/>
         <allow-intent href="itms-apps:*"/>
+        <allow-intent href="http://antonfisher.com*"/>
     </platform>
     <preference name="xwalkVersion" value="19+"/>
     <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect"/>
     <preference name="xwalkMode" value="embedded"/>
     <preference name="xwalkMultipleApk" value="true"/>
+    <preference name="fullscreen" value="true" />
 </widget>
