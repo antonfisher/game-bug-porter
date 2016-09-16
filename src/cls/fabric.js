@@ -5,7 +5,7 @@ import {config as c} from './config.js'
 
 let bagsPositions = []
 
-export function createBag () {
+export function createBag (forMenu) {
   let position = null
   const bagMaxCount = Global.get('bagMaxCount') || c.bagMaxCount
 
@@ -43,7 +43,7 @@ export function createBag () {
   bag.animations.add('move', [0, 1, 2, 3], 5, true)
   bag.animations.play('move')
 
-  if (Global.get('scoreObj').gameOn()) {
+  if (!forMenu && Global.get('scoreObj').gameOn()) {
     bag.inputEnabled = true
     bag.input.enableDrag(false, false)
   }

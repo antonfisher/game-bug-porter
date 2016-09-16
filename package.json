@@ -1,7 +1,7 @@
 {
   "name": "game-bug-porter",
   "description": "BugPorter HTML5 game, use bugs to deliver bags and get scores.",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "scripts": {
     "lint": "./node_modules/.bin/standard | ./node_modules/.bin/snazzy",
     "cordova:platforms": "cd cordova && ../node_modules/.bin/cordova platforms ls && cd -",
